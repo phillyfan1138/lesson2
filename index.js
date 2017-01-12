@@ -13,9 +13,18 @@ const port = 3000;
 *	Provide a response from the server to client
 */
 const requestHandler = (request, response) => {
-	console.log(request.url);
-	const info = (request.connection.remoteAddress);
-	response.end(`Your IP address is ${info}`);
+	var myData="";
+	http.get('http://jsonplaceholder.typicode.com/posts', (res) => {
+		 res.on('data', (d) => {
+			//myData+=d;
+			response.end(d);
+		 });
+		
+	}).on('error', (e) => {
+	  console.error(e);
+	});
+	//const info = (request.connection.remoteAddress);
+	
 }
 const server = http.createServer(requestHandler);
 
